@@ -18,7 +18,6 @@ CREATE OR REFRESH STREAMING TABLE silver.fact_quotation_assets(
   moeda,
   CAST(horario_coleta AS TIMESTAMP) as horario_coleta,
   date_trunc('hour', CAST(horario_coleta AS TIMESTAMP)) as data_hora_aproximada,
-  ingested_at,
   current_timestamp() as processed_at
 FROM (
   -- Cotações Bitcoin
@@ -36,7 +35,6 @@ FROM (
     ativo,
     preco,
     moeda,
-    horario_coleta,
-    ingested_at
-  FROM STREAM(bronze.quotation_yfinance)
+    horario_coleta
+  FROM STREAM(bronze.yfinance)
 ) combined_quotations
